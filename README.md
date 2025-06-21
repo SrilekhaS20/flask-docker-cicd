@@ -8,4 +8,4 @@ v1.0.0 - Manual setup base version
 
 | Step | Task | Time Taken |
 |------|------|------------|
-| Step 1 | Create Flask app + health/version | 5–7 mins |
+| Step 1 | Create Flask app + health/version | 20 mins |
