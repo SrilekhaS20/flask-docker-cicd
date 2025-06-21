@@ -3,3 +3,9 @@ A demo DevOps app to show how to deploy a Flask microservice to AWS EC2 using ma
 
 ### Version
 v1.0.0 - Manual setup base version
+
+# 🕒 Manual Deployment Time Log
+
+| Step | Task | Time Taken |
+|------|------|------------|
+| Step 1 | Create Flask app + health/version | 5–7 mins |
