@@ -174,7 +174,7 @@ kubectl apply -f eks_cluster/service.yaml
 
 ```deployment.yaml
 containers:
-  - name: flask-app
+  - name: flask-container
     image: <your-dockerhub-username>/flask-docker-cicd:v2
 ```
 
