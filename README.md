@@ -51,10 +51,10 @@ CMD ["python", "app.py"]
 ⚙️ Docker Commands to Build & Run Locally
 ```
 # Build the image
-docker build -t flask-docker-cicd .
+docker build -t flask-docker-cicd:v1 .
 
 # Run the container
-docker run -d -p 5000:5000 flask-docker-cicd
+docker run -p 5000:5000 flask-docker-cicd:v1
 ```
 
 ---
