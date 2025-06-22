@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return "Flask App Deployed Manually to EC2"
+    return "Flask App Deployed Manually to EKS"
 
 @app.route("/health")
 def health():
