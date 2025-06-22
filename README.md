@@ -200,6 +200,8 @@ Once deployment is successful, open your browser:
 
 ```bash
 http://<LoadBalancer-External-IP>
+http://<LoadBalancer-External-IP>/health
+http://<LoadBalancer-External-IP>/version
 ```
 
 # 🕒 Manual Deployment Time Log
