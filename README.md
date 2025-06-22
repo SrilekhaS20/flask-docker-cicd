@@ -75,9 +75,135 @@ docker login
 docker tag flask-docker-cicd:v1 <docker_username>/flask-docker-cicd:v1
 docker push <docker_username>/flask-docker-cicd:v1
 ```
+## Step 3 - Create EKS Cluster (Manual Setup via Console)
+
+### 🔧 Prerequisites
+
+#### - AWS account with necessary IAM permissions
+#### - AWS CLI & kubectl installed and configured
+#### - Docker installed
+#### - GitHub account (for code & image pushing)
+#### - DockerHub account (to store your image)
+
+### Step 3.1 – Create Cluster IAM Role
+
+#### Go to IAM > Roles > Create Role
+
+#### Choose: EKS – Cluster
+
+#### Attach Policy: AmazonEKSClusterPolicy, AmazonEKSServicePolicy
+
+#### Name it: AmazonEKSClusterRole
+
+
+### Step 3.2 – Create EKS Cluster (Custom Config)
+
+#### Go to EKS > Add Cluster > Create
+
+#### Name: EKSCluster
+
+#### Select the AmazonEKSClusterRole you just created
+
+#### Networking:
+
+#### You can use default VPC
+
+#### Select 2 subnets (in different AZs)
+
+#### Select/Create security group (allow inbound 80/443)
+
+
+
+### Step 3.3 – Enable Cluster Access
+
+#### Select Public and Private access
+
+#### Optionally, restrict CIDR range to your IP
+
+
+### Step 3.4 – Create Node Group (EC2 Worker Nodes)
+
+#### IAM Role for Node Group
+
+#### Go to IAM > Roles > Create Role
+
+#### Choose: EKS – Node Group
+
+#### Attach Policies:
+
+#### AmazonEKSWorkerNodePolicy
+
+#### AmazonEC2ContainerRegistryReadOnly
+
+#### AmazonEKS_CNI_Policy
+
+#### Name it: NodeGroupRole
+
+
+### Step 3.5 – Add Managed Node Group
+
+#### Select EC2 instance type: t3.medium (Free Tier eligible for limited use)
+
+#### Use the role: NodeGroupRole
+
+#### Name: node-group
+
+#### Desired size - 2 nodes
+#### Minimum size - 1 node
+#### Maximum size - 3 nodes
+
+#### Proceed and create the node group
+
+
+### Step 3.6 - Configure kubectl with EKS Cluster
+
+```bash
+aws eks --region us-east-1 update-kubeconfig --name EKSCluster
+```
+
+### Step 3.7 - Deploy Flask App to EKS
+
+#### Apply Kubernetes Manifests
+
+```bash
+kubectl apply -f eks_cluster/deployment.yaml
+kubectl apply -f eks_cluster/service.yaml
+```
+
+#### Ensure deployment.yaml pulls image from DockerHub:
+
+```deployment.yaml
+containers:
+  - name: flask-app
+    image: <your-dockerhub-username>/flask-docker-cicd:v2
+```
+
+#### Check if deployements are created
+
+```bash
+kubectl get pods
+kubectl get deploy
+```
+
+### Step 3.8 – Get Load Balancer IP
+
+```bash
+kubectl get svc flask-service
+```
+
+#### Access your Flask app in browser using EXTERNAL-IP of LoadBalancer
+
+
+🌐 App Access
+
+Once deployment is successful, open your browser:
+
+http://<LoadBalancer-External-IP>
+
 # 🕒 Manual Deployment Time Log
 
 | Step | Task | Time Taken |
 |------|------|------------|
 | Step 1 | Create Flask app + health/version | 20 mins |
-| Step 2 | Dockerfile creation, build, run and testing | 30 mins |
+| Step 2 | Dockerfile creation, build, run, testing and pushed to DockerHub| 30 mins |
+| Step 3 | EKS Cluster manual setup via AWS Console | 2 hours |
