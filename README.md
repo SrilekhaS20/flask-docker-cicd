@@ -69,6 +69,12 @@ docker run -p 5000:5000 flask-docker-cicd:v1
 
 #### http://localhost:5000/version → ✅ Returns version from version.txt
 
+### Push Image to DockerHub
+```bash
+docker login
+docker tag flask-docker-cicd:v1 <docker_username>/flask-docker-cicd:v1
+docker push <docker_username>/flask-docker-cicd:v1
+```
 # 🕒 Manual Deployment Time Log
 
 | Step | Task | Time Taken |
