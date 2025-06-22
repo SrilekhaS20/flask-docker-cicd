@@ -198,7 +198,9 @@ kubectl get svc flask-service
 
 Once deployment is successful, open your browser:
 
+```bash
 http://<LoadBalancer-External-IP>
+```
 
 # 🕒 Manual Deployment Time Log
 
