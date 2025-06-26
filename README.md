@@ -63,13 +63,13 @@ docker run -p 5000:5000 flask-docker-cicd:v1
 
 #### Visit the following URLs in your browser (while the container is running):
 
-#### http://localhost:5000/ → ✅ Shows welcome message
+##### http://localhost:5000/ → ✅ Shows welcome message
 
-#### http://localhost:5000/health → ✅ Returns "ok"
+##### http://localhost:5000/health → ✅ Returns "ok"
 
-#### http://localhost:5000/version → ✅ Returns version from version.txt
+##### http://localhost:5000/version → ✅ Returns version from version.txt
 
-### Push Image to DockerHub
+##### Push Image to DockerHub
 ```bash
 docker login
 docker tag flask-docker-cicd:v1 <docker_username>/flask-docker-cicd:v1
@@ -79,80 +79,80 @@ docker push <docker_username>/flask-docker-cicd:v1
 
 ### 🔧 Prerequisites
 
-#### - AWS account with necessary IAM permissions
-#### - AWS CLI & kubectl installed and configured
-#### - Docker installed
-#### - GitHub account (for code & image pushing)
-#### - DockerHub account (to store your image)
+##### - AWS account with necessary IAM permissions
+##### - AWS CLI & kubectl installed and configured
+##### - Docker installed
+##### - GitHub account (for code & image pushing)
+##### - DockerHub account (to store your image)
 
 ### Step 3.1 – Create Cluster IAM Role
 
-#### Go to IAM > Roles > Create Role
+##### Go to IAM > Roles > Create Role
 
-#### Choose: EKS – Cluster
+##### Choose: EKS – Cluster
 
-#### Attach Policy: AmazonEKSClusterPolicy, AmazonEKSServicePolicy
+##### Attach Policy: AmazonEKSClusterPolicy, AmazonEKSServicePolicy
 
-#### Name it: AmazonEKSClusterRole
+##### Name it: AmazonEKSClusterRole
 
 
 ### Step 3.2 – Create EKS Cluster (Custom Config)
 
-#### Go to EKS > Add Cluster > Create
+##### Go to EKS > Add Cluster > Create
 
-#### Name: EKSCluster
+##### Name: EKSCluster
 
-#### Select the AmazonEKSClusterRole you just created
+##### Select the AmazonEKSClusterRole you just created
 
-#### Networking:
+##### Networking:
 
-#### You can use default VPC
+##### You can use default VPC
 
-#### Select 2 subnets (in different AZs)
+##### Select 2 subnets (in different AZs)
 
-#### Select/Create security group (allow inbound 80/443)
+##### Select/Create security group (allow inbound 80/443)
 
 
 
 ### Step 3.3 – Enable Cluster Access
 
-#### Select Public and Private access
+##### Select Public and Private access
 
-#### Optionally, restrict CIDR range to your IP
+##### Optionally, restrict CIDR range to your IP
 
 
 ### Step 3.4 – Create Node Group (EC2 Worker Nodes)
 
-#### IAM Role for Node Group
+##### IAM Role for Node Group
 
-#### Go to IAM > Roles > Create Role
+##### Go to IAM > Roles > Create Role
 
-#### Choose: EKS – Node Group
+##### Choose: EKS – Node Group
 
-#### Attach Policies:
+##### Attach Policies:
 
-#### AmazonEKSWorkerNodePolicy
+##### AmazonEKSWorkerNodePolicy
 
-#### AmazonEC2ContainerRegistryReadOnly
+##### AmazonEC2ContainerRegistryReadOnly
 
-#### AmazonEKS_CNI_Policy
+##### AmazonEKS_CNI_Policy
 
-#### Name it: NodeGroupRole
+##### Name it: NodeGroupRole
 
 
 ### Step 3.5 – Add Managed Node Group
 
-#### Select EC2 instance type: t3.medium (Free Tier eligible for limited use)
+##### Select EC2 instance type: t3.medium (Free Tier eligible for limited use)
 
-#### Use the role: NodeGroupRole
+##### Use the role: NodeGroupRole
 
-#### Name: node-group
+##### Name: node-group
 
-#### Desired size - 2 nodes
-#### Minimum size - 1 node
-#### Maximum size - 3 nodes
+##### Desired size - 2 nodes
+##### Minimum size - 1 node
+##### Maximum size - 3 nodes
 
-#### Proceed and create the node group
+##### Proceed and create the node group
 
 
 ### Step 3.6 - Configure kubectl with EKS Cluster
