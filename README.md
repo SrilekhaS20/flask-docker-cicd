@@ -1,6 +1,8 @@
 # Flask Docker App - Manual to CI/CD
 A demo DevOps app to show how to deploy a Flask microservice to AWS EC2 using manual steps first, then automate using GitHub Actions.
 
+![Flask App with EKS Cluster Architecture Diagram](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/eks_architecture_diagram.jpg)
+
 ## Step 1 - Run Locally (Without Docker)
 Ensure Python 3.10+ is installed.
 ```bash
@@ -59,21 +61,33 @@ CMD ["python", "app.py"]
 # Build the image
 docker build -t flask-docker-cicd:v1 .
 
+```
+![Docker image build](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/docker-build-success.jpg)
+
+![View Docker image](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/docker-images-1.jpg)
+
+```
 # Run the container
 docker run -p 5000:5000 flask-docker-cicd:v1
 ```
-
+![Docker run](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/docker-run-1.jpg)
 ---
 
 ✅ Verify App in Browser
 
 #### Visit the following URLs in your browser (while the container is running):
 
-##### http://localhost:5000/ → ✅ Shows welcome message
+#### http://localhost:5000/ → ✅ Shows welcome message
 
-##### http://localhost:5000/health → ✅ Returns "ok"
+![Home Page](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/browser-homepage.jpg)
 
-##### http://localhost:5000/version → ✅ Returns version from version.txt
+#### http://localhost:5000/health → ✅ Returns "ok"
+
+![Health endpoint](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/browser-health.jpg)
+
+#### http://localhost:5000/version → ✅ Returns version from version.txt
+
+![Version endpoint](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/browser-version.jpg)
 
 ##### Push Image to DockerHub
 ```bash
@@ -188,14 +202,19 @@ containers:
 
 ```bash
 kubectl get pods
+```
+![Pods](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/eks-pods.jpg)
+```bash
 kubectl get deploy
 ```
+![Deployment](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/eks-deployments.jpg)
 
 ### Step 3.8 – Get Load Balancer IP
 
 ```bash
 kubectl get svc flask-service
 ```
+![Service](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/eks_lb_endpoint.jpg)
 
 #### Access your Flask app in browser using EXTERNAL-IP of LoadBalancer
 
@@ -206,9 +225,18 @@ Once deployment is successful, open your browser:
 
 ```bash
 http://<LoadBalancer-External-IP>
+```
+![Home Page](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/eks-flask-homepage.jpg)
+
+```bash
 http://<LoadBalancer-External-IP>/health
+```
+![Health endpoint](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/eks-flask-health.jpg)
+
+```bash
 http://<LoadBalancer-External-IP>/version
 ```
+![Version endpoint](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/eks-flask-version.jpg)
 
 # 🕒 Manual Deployment Time Log
 
