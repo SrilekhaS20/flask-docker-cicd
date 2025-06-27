@@ -65,6 +65,8 @@ docker run -p 5000:5000 flask-docker-cicd:v1
 
 ##### http://localhost:5000/ → ✅ Shows welcome message
 
+![Home Page] (screenshots/browser-homepage.jpg)
+
 ##### http://localhost:5000/health → ✅ Returns "ok"
 
 ##### http://localhost:5000/version → ✅ Returns version from version.txt
