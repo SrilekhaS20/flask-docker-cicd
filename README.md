@@ -10,9 +10,15 @@ python app.py
 #### Then visit:
 #### http://localhost:5000/ → ✅ Shows welcome message
 
+![Home Page](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/browser-homepage.jpg)
+
 #### http://localhost:5000/health → ✅ Returns "ok"
 
+![Health endpoint](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/browser-health.jpg)
+
 #### http://localhost:5000/version → ✅ Returns version from version.txt
+
+![Version endpoint](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/browser-version.jpg)
 
 ### Version
 v1.0.0 - Manual setup base version
@@ -64,8 +70,6 @@ docker run -p 5000:5000 flask-docker-cicd:v1
 #### Visit the following URLs in your browser (while the container is running):
 
 ##### http://localhost:5000/ → ✅ Shows welcome message
-
-![Home Page] (screenshots/browser-homepage.jpg)
 
 ##### http://localhost:5000/health → ✅ Returns "ok"
 
