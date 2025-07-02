@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return "Flask App Deployed Manually to EKS"
+    return "Flask App Deployed to EKS using Terraform"
 
 @app.route("/health")
 def health():
