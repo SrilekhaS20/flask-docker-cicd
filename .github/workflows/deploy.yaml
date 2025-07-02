@@ -36,5 +36,5 @@ jobs:
 
     - name: Update kubeconfig
       run: |
-        kubectl apply -f terraform/eks_cluster/deployment.yml
-        kubectl apply -f terraform/eks_cluster/service.yml
+        kubectl apply -f terraform/eks_cluster/deployment.yaml
+        kubectl apply -f terraform/eks_cluster/service.yaml
