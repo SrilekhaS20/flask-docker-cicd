@@ -1,0 +1,22 @@
+# Local Terraform files
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
+
+# Sensitive input files
+*.tfvars
+*.tfvars.json
+
+# Crash logs and override files
+crash.log
+*.override.tf
+*override.tf.json
+
+# IDE/editor junk
+*.swp
+*.bak
+*.tmp
+*.DS_Store
+.vscode/
+.idea/
