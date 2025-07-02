@@ -25,4 +25,28 @@ module "eks" {
   enable_irsa                              = true
   cluster_endpoint_public_access           = true
   enable_cluster_creator_admin_permissions = true
+
+  eks_managed_node_groups = {
+    flask_nodes = {
+      desired_size = 2
+      max_size     = 3
+      min_size     = 1
+
+      instance_types = ["t3.medium"]
+      capacity_type  = "ON_DEMAND"
+
+      subnet_ids = module.vpc.private_subnets
+
+      create_iam_role = true
+      iam_role_additional_policies = {
+        AmazonEKSWorkerNodePolicy          = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+        AmazonEC2ContainerRegistryReadOnly = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+        AmazonEKS_CNI_Policy               = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+      }
+
+      tags = {
+        Name = "flask-node-groups"
+      }
+    }
+  }
 }
