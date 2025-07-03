@@ -259,10 +259,12 @@ To improve reliability and save significant time, the entire infrastructure setu
 
 ##### Directory Structure:
 
+```plaintext
 terraform/
 ├── main.tf               # Defines VPC & EKS modules (cluster setup, networking)
 ├── variables.tf          # Input variables for Terraform modules
 ├── outputs.tf            # Outputs like VPC ID, EKS Cluster name, etc.
+```
 
 ##### Example Terraform Module Configuration (EKS & VPC):
 
