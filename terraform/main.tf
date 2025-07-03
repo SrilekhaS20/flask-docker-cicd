@@ -13,6 +13,10 @@ module "vpc" {
   enable_nat_gateway   = true
   single_nat_gateway   = true
   enable_dns_hostnames = true
+
+  tags = {
+    Environment = var.environment
+  }
 }
 
 module "eks" {
@@ -46,6 +50,7 @@ module "eks" {
 
       tags = {
         Name = "flask-node-groups"
+        Environment = var.environment
       }
     }
   }
