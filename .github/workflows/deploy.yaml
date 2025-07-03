@@ -1,9 +1,10 @@
 name: Deploy on EKS
 
 on:
-  push:
-    branches: [main]
-
+  workflow_run: 
+    workflows: ["Terraform infra Apply (Manual Approval)"]
+    types:
+    - completed
 jobs:
   deploy:
     runs-on: ubuntu-latest
