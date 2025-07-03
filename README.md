@@ -260,11 +260,13 @@ To improve reliability and save significant time, the entire infrastructure setu
 ##### Directory Structure:
 
 terraform/
-├── main.tf               # EKS & VPC Modules
-├── variables.tf          # Input Variables
-├── outputs.tf            # Output Values
+├── main.tf               # Defines VPC & EKS modules (cluster setup, networking)
+├── variables.tf          # Input variables for Terraform modules
+├── outputs.tf            # Outputs like VPC ID, EKS Cluster name, etc.
 
 ##### Example Terraform Module Configuration (EKS & VPC):
+
+###### main.tf
 
 ```main.tf
 provider "aws" {
@@ -326,6 +328,8 @@ module "eks" {
 }
 ```
 
+###### variables.tf
+
 ```variables.tf
 variable "region" {
   description = "Region to deploy resources"
@@ -381,6 +385,8 @@ variable "environment" {
   default = "Production"
 }
 ```
+
+###### outputs.tf
 
 ```outputs.tf
 output "vpc_id" {
