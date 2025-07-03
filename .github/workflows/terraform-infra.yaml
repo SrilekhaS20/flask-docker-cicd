@@ -1,7 +1,7 @@
 name: Terraform infra Apply (Manual Approval)
 
 on:
-  workflow_dispatach:
+  workflow_dispatch:
 
 jobs:
   terraform:
