@@ -43,3 +43,12 @@ jobs:
       run: |
         kubectl apply -f terraform/eks_cluster/deployment.yaml
         kubectl apply -f terraform/eks_cluster/service.yaml
+
+    - name: Verify Deployment (Pods, Deployments, Services)
+      run: |
+        echo "=== Pods ==="
+        kubectl get pods -o wide
+        echo "=== Deployments ==="
+        kubectl get deployments -o wide
+        echo "=== Services ==="
+        kubectl get svc -o wide
