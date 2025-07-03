@@ -57,8 +57,9 @@ CMD ["python", "app.py"]
 ---
 
 ⚙️ Docker Commands to Build & Run Locally
-```
+
 # Build the image
+```
 docker build -t flask-docker-cicd:v1 .
 
 ```
@@ -66,8 +67,9 @@ docker build -t flask-docker-cicd:v1 .
 
 ![View Docker image](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/docker-images-1.jpg)
 
-```
+
 # Run the container
+```
 docker run -p 5000:5000 flask-docker-cicd:v1
 ```
 ![Docker run](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/docker-run-1.jpg)
@@ -238,6 +240,278 @@ http://<LoadBalancer-External-IP>/version
 ```
 ![Version endpoint](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/eks-flask-version.jpg)
 
+### Step 4 - Automate Infrastructure with Terraform (IaC)
+
+To improve reliability and save significant time, the entire infrastructure setup was automated using Terraform and deployed via GitHub Actions.
+
+#### ✅ Terraform Scripts for EKS Cluster Creation
+
+##### VPC with Public & Private Subnets
+
+##### NAT Gateway for private subnets
+
+##### EKS Cluster setup (Control Plane)
+
+##### Managed Node Groups for worker nodes
+
+##### IAM roles for cluster and node groups
+
+
+##### Directory Structure:
+
+terraform/
+├── main.tf               # EKS & VPC Modules
+├── variables.tf          # Input Variables
+├── outputs.tf            # Output Values
+
+##### Example Terraform Module Configuration (EKS & VPC):
+
+```main.tf
+provider "aws" {
+  region = var.region
+}
+
+module "vpc" {
+  source               = "terraform-aws-modules/vpc/aws"
+  version              = "5.1.1"
+  name                 = var.vpc_name
+  cidr                 = var.vpc_cidr
+  azs                  = var.availability_zones
+  public_subnets       = var.public_subnets
+  private_subnets      = var.private_subnets
+  enable_nat_gateway   = true
+  single_nat_gateway   = true
+  enable_dns_hostnames = true
+
+  tags = {
+    Environment = var.environment
+  }
+}
+
+module "eks" {
+  source                                   = "terraform-aws-modules/eks/aws"
+  version                                  = "20.37.1"
+  cluster_name                             = var.cluster_name
+  cluster_version                          = var.cluster_version
+  vpc_id                                   = module.vpc.vpc_id
+  subnet_ids                               = module.vpc.private_subnets
+  enable_irsa                              = true
+  cluster_endpoint_public_access           = true
+  enable_cluster_creator_admin_permissions = true
+
+  eks_managed_node_groups = {
+    flask_nodes = {
+      desired_size = 2
+      max_size     = 3
+      min_size     = 1
+
+      instance_types = ["t3.medium"]
+      capacity_type  = "ON_DEMAND"
+
+      subnet_ids = module.vpc.private_subnets
+
+      create_iam_role = true
+      iam_role_additional_policies = {
+        AmazonEKSWorkerNodePolicy          = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+        AmazonEC2ContainerRegistryReadOnly = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+        AmazonEKS_CNI_Policy               = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+      }
+
+      tags = {
+        Name = "flask-node-groups"
+        Environment = var.environment
+      }
+    }
+  }
+}
+```
+
+```variables.tf
+variable "region" {
+  description = "Region to deploy resources"
+  type = string
+  default = "us-east-1"
+}
+
+variable "vpc_name" {
+  description = "Name of VPC"
+  type = string
+  default = "eks-vpc"
+}
+
+variable "vpc_cidr" {
+  description = "CIDR of VPC"
+  type = string
+  default = "10.0.0.0/16"
+}
+
+variable "availability_zones" {
+  description = "Name of VPC"
+  type = list(string)
+  default = ["us-east-1a", "us-east-1b"]
+}
+
+variable "public_subnets" {
+  description = "Public Subnets of VPC"
+  type = list(string)
+  default = ["10.0.1.0/24", "10.0.2.0/24"]
+}
+
+variable "private_subnets" {
+  description = "Private Subnets of VPC"
+  type = list(string)
+  default = ["10.0.3.0/24", "10.0.4.0/24"]
+}
+
+variable "cluster_name" {
+  description = "Name of EKS Cluster"
+  type = string
+  default = "EKSCluster"
+}
+
+variable "cluster_version" {
+  description = "Version of EKS Cluster"
+  type = string
+  default = "1.32"
+}
+
+variable "environment" {
+  description = "Environment to deploy resources"
+  type = string
+  default = "Production"
+}
+```
+
+```outputs.tf
+output "vpc_id" {
+  value = module.vpc.vpc_id
+}
+
+output "public_subnet" {
+  value = module.vpc.public_subnets
+}
+
+output "private_subnets" {
+  value = module.vpc.private_subnets
+}
+
+output "cluster_name" {
+  value = module.eks.cluster_name
+}
+
+output "cluster_endpoint" {
+  value = module.eks.cluster_endpoint
+}
+```
+---
+
+### ✅ GitHub Actions for Infrastructure Automation (CI/CD)
+
+##### terraform-infra.yaml (Terraform IaC Pipeline)
+
+```terraform-infra.yaml
+name: Terraform infra Apply (Manual Approval)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    environment: Production
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: 1.12.2
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    - name: Terraform Init
+      working-directory: terraform
+      run: terraform init
+
+    - name: Terraform Plan
+      working-directory: terraform
+      run: terraform plan
+
+    - name: Terraform Apply (Manual Approval Required)
+      working-directory: terraform
+      run: terraform apply -auto-approve
+```
+---
+
+##### deploy.yaml (CI/CD Pipeline for App Deployment)
+
+```deploy.yaml
+name: Deploy on EKS
+
+on:
+  workflow_run: 
+    workflows: ["Terraform infra Apply (Manual Approval)"]
+    types:
+    - completed
+
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Set up Docker
+      uses: docker/setup-buildx-action@v2
+
+    - name: Log in to DockerHub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD}}
+
+    - name: Build and Push Docker image
+      run: |
+        docker build -t flask-docker-cicd:v2 .
+        docker tag flask-docker-cicd:v2 ${{ secrets.DOCKER_USERNAME }}/flask-docker-cicd:v2
+        docker push ${{ secrets.DOCKER_USERNAME }}/flask-docker-cicd:v2
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    - name: Update kubeconfig
+      run: |
+        aws eks update-kubeconfig --name EKSCluster --region us-east-1
+
+    - name: Deploy to EKS
+      run: |
+        kubectl apply -f terraform/eks_cluster/deployment.yaml
+        kubectl apply -f terraform/eks_cluster/service.yaml
+
+    - name: Verify Deployment (Pods, Deployments, Services)
+      run: |
+        echo "=== Pods ==="
+        kubectl get pods -o wide
+        echo "=== Deployments ==="
+        kubectl get deployments -o wide
+        echo "=== Services ==="
+        kubectl get svc -o wide
+```
+---
+
 # 🕒 Manual Deployment Time Log
 
 | Step | Task | Time Taken |
@@ -245,3 +519,5 @@ http://<LoadBalancer-External-IP>/version
 | Step 1 | Create Flask app + health/version | 20 mins |
 | Step 2 | Dockerfile creation, build, run, testing and pushed to DockerHub| 30 mins |
 | Step 3 | EKS Cluster manual setup via AWS Console | 120 mins |
+| Step 4 | Develop and create EKS Cluster using Terraform | 120 mins |
+| Step 5 | Create GitHub Actions for EKS Cluster with terraform & deploy Flask app | 120 mins |
