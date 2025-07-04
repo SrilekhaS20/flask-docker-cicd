@@ -534,7 +534,7 @@ jobs:
         echo "=== Services ==="
         kubectl get svc -o wide
 ```
-#### GitHub Actions to deploy Flask App on EKS Cluster
+#### Step 5 - GitHub Actions to deploy Flask App on EKS Cluster
 
 ![GitHub Actions to deploy Flask App on EKS Cluster](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/flaskapp_deploy_GH.jpg)
 
@@ -560,12 +560,70 @@ jobs:
 
 ---
 
+#### Step 5 — Automate Versioning & Image Tagging (CI/CD Enhancement)
+
+##### Implemented auto versioning to simplify deployments.
+##### This workflow will:
+
+##### 1. Fetch the latest Docker tag from Docker Hub.
+
+
+##### 2. Auto-increment the version (v1 → v2 → v3...).
+
+
+##### 3. Build, Tag, and Push Docker Image with new version.
+
+
+##### 4. Auto-update deployment.yaml with new image tag.
+
+
+##### 5. Update version.txt file with latest version.
+
+
+##### 6. Push the change back to GitHub.
+
+##### 📂 Sample GitHub Action Workflow Snippet
+
+```deploy.yaml
+- name: Get Latest Docker Tag
+      id: latest_tag
+      run: |
+        LATEST_TAG=$(curl -s https://hub.docker.com/v2/repositories/${{ secrets.DOCKER_USERNAME }}/flask-docker-cicd/tags | jq -r '.results[0].name')
+        echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
+
+    - name: Increment Tag & Build
+      id: increment_tag
+      run: |
+        VERSION_NUM=$(echo "$LATEST_TAG" | grep -o '[0-9]\+')
+        NEXT_TAG=v$((VERSION_NUM + 1))
+        echo "NEXT_TAG=$NEXT_TAG" >> $GITHUB_ENV
+        echo "Next Tag: $NEXT_TAG"
+        docker build -t flask-docker-cicd:$NEXT_TAG .
+        docker tag flask-docker-cicd:$NEXT_TAG ${{ secrets.DOCKER_USERNAME }}/flask-docker-cicd:$NEXT_TAG
+        docker push ${{ secrets.DOCKER_USERNAME }}/flask-docker-cicd:$NEXT_TAG
+    
+    - name: Update Deployment YAML
+      run: |
+        sed -i "s|image:.*|image: ${{ secrets.DOCKER_USERNAME }}/flask-docker-cicd:$NEXT_TAG|" terraform/eks_cluster/deployment.yaml
+    
+    - name: Update Version File
+      run: |
+        echo "$NEXT_TAG" > version.txt
+        git config --global user.email "${{ secrets.GH_EMAIL }}"
+        git config --global user.name "${{ secrets.GH_USERNAME }}"
+        git add version.txt
+        git commit -m "Increment Version to $NEXT_TAG"
+        git push
+```
+
 # 🕒 Manual Deployment Time Log
 
-| Step | Task | Time Taken |
-|------|------|------------|
-| Step 1 | Create Flask app + health/version | 20 mins |
-| Step 2 | Dockerfile creation, build, run, testing and pushed to DockerHub| 30 mins |
-| Step 3 | EKS Cluster manual setup via AWS Console | 120 mins |
-| Step 4 | Develop and create EKS Cluster using Terraform | 120 mins |
-| Step 5 | Create GitHub Actions for EKS Cluster with terraform & deploy Flask app | 120 mins |
+| Step | Task | Manual Setup Time Taken | Automation Total Time Taken |
+|------|------|------------|------------------------------------------|
+| Step 1 | Create Flask app + health/version | 20 mins |         |
+| Step 2 | Dockerfile creation, build, run, testing and pushed to DockerHub| 30 mins |         |
+| Step 3 | EKS Cluster manual setup via AWS Console | 120 mins |         |
+| Step 4 | Develop and create EKS Cluster using Terraform | 120 mins |         |
+| Step 5 | Create GitHub Actions for EKS Cluster with terraform & deploy Flask app | 120 mins |         |
+| Step 6 | Automate Versioning & Image Tagging | 45 mins |         |
+|                                                         | 3 secs |
