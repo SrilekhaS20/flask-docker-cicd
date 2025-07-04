@@ -469,6 +469,7 @@ jobs:
       run: terraform apply -auto-approve
 ```
 ---
+#### Terraform infrastructure automation with CICD
 
 ![Terraform infrastructure automation with CICD](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/Terra-infra.jpg)
 
@@ -533,16 +534,27 @@ jobs:
         echo "=== Services ==="
         kubectl get svc -o wide
 ```
+#### GitHub Actions to deploy Flask App on EKS Cluster
 
 ![GitHub Actions to deploy Flask App on EKS Cluster](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/flaskapp_deploy_GH.jpg)
 
+#### Flask App deployment with output to verify endpoint
+
 ![Flask App deployment with output to verify endpoint](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/Deploy_verification.jpg)
+
+#### EKS Cluster Creation with Terraform & GitHub Actions
 
 ![EKS Cluster Creation with Terraform & GitHub Actions](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/EKS_through_GH&Terraform.jpg)
 
+#### Home Page
+
 ![Home Page](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/Terra_auto_homepage.jpg)
 
+#### Health endpoint
+
 ![Health endpoint](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/Terra_auto_health.jpg)
+
+#### Version endpoint
 
 ![Version endpoint](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/Terra_infra_version.jpg)
 
