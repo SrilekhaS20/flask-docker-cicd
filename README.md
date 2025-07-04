@@ -540,6 +540,12 @@ jobs:
 
 ![EKS Cluster Creation with Terraform & GitHub Actions](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/EKS_through_GH&Terraform.jpg)
 
+![Home Page](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/Terra_auto_homepage.jpg)
+
+![Health endpoint](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/Terra_auto_health.jpg)
+
+![Version endpoint](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/Terra_infra_version.jpg)
+
 ---
 
 # 🕒 Manual Deployment Time Log
