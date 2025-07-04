@@ -254,7 +254,7 @@ To improve reliability and save significant time, the entire infrastructure setu
 
 ##### EKS Cluster setup (Control Plane)
 
-![EKS Cluster Creation](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/EKS.jpg)
+![EKS Cluster Creation](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/EKS.jpeg)
 
 ![EKS Cluster State](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/EKSCluster_creation.jpeg)
 
