@@ -615,6 +615,18 @@ jobs:
         git commit -m "Increment Version to $NEXT_TAG"
         git push
 ```
+#### Home Page
+
+![Home Page](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/GH_auto_homepage.jpg)
+
+#### Health endpoint
+
+![Health endpoint](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/GH_auto_health.jpg)
+
+#### Version endpoint
+
+![Version endpoint](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/GH_auto_version.jpg)
+
 
 # 🕒 Manual Deployment Time Log
 
