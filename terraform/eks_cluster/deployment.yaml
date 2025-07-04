@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: flask-container
-        image: sri24devops/flask-docker-cicd:v2
+        image: sri24devops/flask-docker-cicd:$NEXT_TAG
         ports:
         - containerPort: 5000
