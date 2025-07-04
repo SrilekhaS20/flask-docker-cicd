@@ -626,4 +626,4 @@ jobs:
 | Step 4 | Develop and create EKS Cluster using Terraform | 120 mins |         |
 | Step 5 | Create GitHub Actions for EKS Cluster with terraform & deploy Flask app | 120 mins |         |
 | Step 6 | Automate Versioning & Image Tagging | 45 mins |         |
-|                                                         | 3 secs |
+| Total Time taken |                                     | 3 secs  |
