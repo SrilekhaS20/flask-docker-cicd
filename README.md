@@ -250,23 +250,23 @@ To improve reliability and save significant time, the entire infrastructure setu
 
 ##### NAT Gateway for private subnets
 
-![VPC Creation](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/VPC.jpg)
+![VPC Creation](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/VPC.jpeg)
 
 ##### EKS Cluster setup (Control Plane)
 
-![EKS Cluster Creation](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/EKS.jpg)
+![EKS Cluster Creation](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/EKS.jpeg)
 
-![EKS Cluster State](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/EKSCluster_creation.jpg)
+![EKS Cluster State](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/EKSCluster_creation.jpeg)
 
-![Updating kubeconfig](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/kubeconfig.jpg)
+![Updating kubeconfig](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/kubeconfig.jpeg)
 
 ##### Managed Node Groups for worker nodes
 
-![Node Group](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/Nodegroup.jpg)
+![Node Group](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/Nodegroup.jpeg)
 
 ##### IAM roles for cluster and node groups
 
-![Flask App deployment](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/flaskapp_deploy_EKS.jpg)
+![Flask App deployment](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/flaskapp_deploy_EKS.jpeg)
 
 ##### Directory Structure:
 
