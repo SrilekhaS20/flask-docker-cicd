@@ -620,10 +620,10 @@ jobs:
 
 | Step | Task | Manual Setup Time Taken | Automation Total Time Taken |
 |------|------|------------|------------------------------------------|
-| Step 1 | Create Flask app + health/version | 20 mins |         |
-| Step 2 | Dockerfile creation, build, run, testing and pushed to DockerHub| 30 mins |         |
-| Step 3 | EKS Cluster manual setup via AWS Console | 120 mins |         |
-| Step 4 | Develop and create EKS Cluster using Terraform | 120 mins |         |
-| Step 5 | Create GitHub Actions for EKS Cluster with terraform & deploy Flask app | 120 mins |         |
-| Step 6 | Automate Versioning & Image Tagging | 45 mins |         |
-| Total Time taken |                                     | 3 secs  |
+| Step 1 | Create Flask app + health/version | 20 mins |
+| Step 2 | Dockerfile creation, build, run, testing and pushed to DockerHub| 30 mins |
+| Step 3 | EKS Cluster manual setup via AWS Console | 120 mins |
+| Step 4 | Develop and create EKS Cluster using Terraform | 120 mins |
+| Step 5 | Create GitHub Actions for EKS Cluster with terraform & deploy Flask app | 120 mins |
+| Step 6 | Automate Versioning & Image Tagging | 45 mins |
+| Total Time |                                 |         | 3 secs  |
