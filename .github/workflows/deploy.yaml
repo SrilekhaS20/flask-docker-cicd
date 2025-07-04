@@ -48,10 +48,10 @@ jobs:
     - name: Update Version File
       run: |
         echo "$NEXT_TAG" > version.txt
-        git config --global user.email ${{ GH_EMAIL }}
-        git config --global user.name ${{ GH_USERNAME }}
+        git config --global user.email "${{ secrets.GH_EMAIL }}"
+        git config --global user.name "${{ secrets.GH_USERNAME }}"
         git add version.txt
-        git commit -m "Bump version to $NEXT_TAG"
+        git commit -m "Increment Version to $NEXT_TAG"
         git push
 
     - name: Configure AWS credentials
