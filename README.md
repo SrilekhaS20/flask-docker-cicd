@@ -560,7 +560,7 @@ jobs:
 
 ---
 
-#### Step 5 — Automate Versioning & Image Tagging (CI/CD Enhancement)
+#### Step 5 - Automate Versioning & Image Tagging (CI/CD Enhancement)
 
 ##### Implemented auto versioning to simplify deployments.
 ##### This workflow will:
