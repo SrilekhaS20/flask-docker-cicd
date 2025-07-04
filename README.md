@@ -250,12 +250,23 @@ To improve reliability and save significant time, the entire infrastructure setu
 
 ##### NAT Gateway for private subnets
 
+![VPC Creation](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/VPC.jpg)
+
 ##### EKS Cluster setup (Control Plane)
+
+![EKS Cluster Creation](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/EKS.jpg)
+
+![EKS Cluster State](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/EKSCluster_creation.jpg)
+
+![Updating kubeconfig](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/kubeconfig.jpg)
 
 ##### Managed Node Groups for worker nodes
 
+![Node Group](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/Nodegroup.jpg)
+
 ##### IAM roles for cluster and node groups
 
+![Flask App deployment](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/flaskapp_deploy_EKS.jpg)
 
 ##### Directory Structure:
 
@@ -411,6 +422,7 @@ output "cluster_endpoint" {
   value = module.eks.cluster_endpoint
 }
 ```
+
 ---
 
 ### ✅ GitHub Actions for Infrastructure Automation (CI/CD)
@@ -457,6 +469,9 @@ jobs:
       run: terraform apply -auto-approve
 ```
 ---
+
+![Terraform infrastructure automation with CICD](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/Terra-infra.jpg)
+
 
 ##### deploy.yaml (CI/CD Pipeline for App Deployment)
 
@@ -518,6 +533,13 @@ jobs:
         echo "=== Services ==="
         kubectl get svc -o wide
 ```
+
+![GitHub Actions to deploy Flask App on EKS Cluster](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/flaskapp_deploy_GH.jpg)
+
+![Flask App deployment with output to verify endpoint](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/Deploy_verification.jpg)
+
+![EKS Cluster Creation with Terraform & GitHub Actions](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/EKS_through_GH&Terraform.jpg)
+
 ---
 
 # 🕒 Manual Deployment Time Log
