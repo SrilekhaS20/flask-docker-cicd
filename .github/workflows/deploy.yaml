@@ -38,8 +38,8 @@ jobs:
         echo "NEXT_TAG=$NEXT_TAG" >> $GITHUB_ENV
         echo "Next Tag: $NEXT_TAG"
         docker build -t flask-docker-cicd:$NEXT_TAG .
-        docker tag flask-docker-cicd:$NEXT_TAG <username>/flask-docker-cicd:$NEXT_TAG
-        docker push <username>/flask-docker-cicd:$NEXT_TAG
+        docker tag flask-docker-cicd:$NEXT_TAG ${{ secrets.DOCKER_USERNAME }}/flask-docker-cicd:$NEXT_TAG
+        docker push ${{ secrets.DOCKER_USERNAME }}/flask-docker-cicd:$NEXT_TAG
     
     - name: Update Deployment YAML
       run: |
