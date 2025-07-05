@@ -615,6 +615,15 @@ jobs:
         git commit -m "Increment Version to $NEXT_TAG"
         git push
 ```
+
+#### Increment Version in version.txt
+
+![Increment Version in version.txt](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/version_increment.jpg)
+
+#### Docker image increment
+
+![Docker image increment](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/docker_increment.jpg)
+
 #### Home Page
 
 ![Home Page](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/GH_auto_homepage.jpg)
