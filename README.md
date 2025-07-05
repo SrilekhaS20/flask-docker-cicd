@@ -1,5 +1,5 @@
 # Flask Docker App - Manual to CI/CD
-A demo DevOps app to show how to deploy a Flask microservice to AWS EKS using manual steps and automated using Terraform and GitHub Actions.
+A demo DevOps app to show how to deploy a Flask App to AWS EKS using manual steps and automated using Terraform and GitHub Actions.
 
 ![Flask App with EKS Cluster Architecture Diagram](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/eks_automation_diagram.jpg)
 
