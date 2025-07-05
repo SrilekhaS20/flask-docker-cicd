@@ -1,7 +1,7 @@
 # Flask Docker App - Manual to CI/CD
 A demo DevOps app to show how to deploy a Flask microservice to AWS EC2 using manual steps first, then automate using GitHub Actions.
 
-![Flask App with EKS Cluster Architecture Diagram](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/eks_architecture_diagram.jpg)
+![Flask App with EKS Cluster Architecture Diagram](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/eks_automation_diagram.jpg)
 
 ## Step 1 - Run Locally (Without Docker)
 Ensure Python 3.10+ is installed.
