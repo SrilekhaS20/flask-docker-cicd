@@ -38,9 +38,19 @@ jobs:
         echo "NEXT_TAG=$NEXT_TAG" >> $GITHUB_ENV
         echo "Next Tag: $NEXT_TAG"
         docker build -t flask-docker-cicd:$NEXT_TAG .
+
+    - name: Scan Docker Image with Trivy
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: 'flask-docker-cicd:{{ env.$NEXT_TAG }}'
+        format: 'table'
+        exit-code: 0
+        ignore-unfixed: true
+
+    - name: Push Image to DockerHub
+      run: |
         docker tag flask-docker-cicd:$NEXT_TAG ${{ secrets.DOCKER_USERNAME }}/flask-docker-cicd:$NEXT_TAG
-        docker push ${{ secrets.DOCKER_USERNAME }}/flask-docker-cicd:$NEXT_TAG
-    
+        docker push ${{ secrets.DOCKER_USERNAME }}/flask-docker-cicd:$NEXT_TAG  
     - name: Update Deployment YAML
       run: |
         sed -i "s|image:.*|image: ${{ secrets.DOCKER_USERNAME }}/flask-docker-cicd:$NEXT_TAG|" terraform/eks_cluster/deployment.yaml
