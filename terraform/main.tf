@@ -2,6 +2,16 @@ provider "aws" {
   region = var.region
 }
 
+terraform {
+  backend "s3" {
+    bucket = "terra-state-eks"
+    key = "eks/terraform.tfstate"
+    region = "us-east-1"
+    dynamodb_table = "terra-lock-eks"
+    encrypt = true
+  }
+}
+
 module "vpc" {
   source               = "terraform-aws-modules/vpc/aws"
   version              = "5.1.1"
