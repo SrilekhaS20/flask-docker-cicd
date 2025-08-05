@@ -101,6 +101,7 @@ resource "aws_iam_role_policy_attachment" "vpc_flow_log_policy_attachment" {
 
 #### Fix
 
+#### Create log group
 ```main.tf
 resource "aws_cloudwatch_log_group" "vpc_flow_log_group" {
   name = "/aws/vpc/flow-logs/${var.vpc_name}"
@@ -109,6 +110,25 @@ resource "aws_cloudwatch_log_group" "vpc_flow_log_group" {
 
   tags = {
     Name = "${var.vpc_name}-flow-log-group"
+    Environment = "Development"
+    Owner = "Srilekha"
+    Project = "EKS-Fintech-LLM"
+    Terraform = "true"
+  }
+}
+```
+
+#### Attach log group in VPC Flow logs resource
+```main.tf
+resource "aws_flow_log" "eks_flow_log" {
+  vpc_id         = aws_vpc.eks_vpc.id
+  iam_role_arn = aws_iam_role.vpc_flow_log_role.arn
+  traffic_type   = "ALL"
+  log_destination_type = "cloud-watch-logs"
+  log_destination = aws_cloudwatch_log_group.vpc_flow_log_group.arn
+
+  tags = {
+    Name = "${var.vpc_name}-flow-log"
     Environment = "Development"
     Owner = "Srilekha"
     Project = "EKS-Fintech-LLM"
