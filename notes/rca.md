@@ -4,7 +4,7 @@
 
 ### Missing IAM Role
 
-![Missing IAM Role](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/vpc_flow_log_error1.jpg)
+![Missing IAM Role](https://github.com/SrilekhaS20/flask-docker-cicd/blob/dev/screenshots/vpc_flow_log_error1.jpg)
 
 ### Situation:
 
@@ -76,7 +76,7 @@ resource "aws_iam_role_policy_attachment" "vpc_flow_log_policy_attachment" {
 
 ### Missing LogGroupName
 
-![Missing LogGroupName](https://github.com/SrilekhaS20/flask-docker-cicd/blob/main/screenshots/vpc_flow_log_error2.jpg)
+![Missing LogGroupName](https://github.com/SrilekhaS20/flask-docker-cicd/blob/dev/screenshots/vpc_flow_log_error2.jpg)
 
 ### Situation:
 
